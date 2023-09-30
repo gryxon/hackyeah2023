@@ -54,11 +54,11 @@ function isOutsideBoard(position) {
    return position < 0 || position >= boardState.length;
 }
 
-function isCorrect() {
-   for (let i = 0; i<boardState.lenght; ++i) {
+function isCorrect(folderName) {
+   for (let i = 0; i<boardState.length; ++i) {
         for (let j = 0; j<boardState[i].length; ++j) {
 	    splitted = boardState[i][j].split("_");
-            if (splitted[0] != i.toString() || splitted[1] != j.toString() + ".jpg") {
+            if (splitted[0] != folderName + "/" +  i || splitted[1] != j + ".jpg") {
 	        return false;
 	    }
         }
@@ -92,8 +92,8 @@ function addKeyDownListener() {
 }
 
 function main(folderName) {
-   generateTable(4, folderName);
-   initBoardState(folderName, 4);
+   generateTable(3, folderName);
+   initBoardState(folderName, 3);
    shuffleBoardState();
    renderBoard();
    addKeyDownListener();
