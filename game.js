@@ -147,6 +147,11 @@ function setDifficulty(boardSize) {
     console.log(Cookies.get("boardSize"));
 }
 
+function setActualDifficulty() {
+    let boardSize = Cookies.get("boardSize") === undefined ? 3 : parseInt(Cookies.get("boardSize"));
+    document.getElementById("difficulty").value = boardSize;
+}
+
 function main() {
    folderName = folderNames[Math.floor(Math.random() * folderNames.length)];
    window.addEventListener('scroll', function (e) {
