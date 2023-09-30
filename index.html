@@ -3,7 +3,7 @@
           <title> Dinozzles </title>
 	  <link rel="stylesheet" href="style.css">
         </head>
-	<body onload="main('Argentinosaurus')">
+	<body onload="main()">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.min.js" integrity="sha512-Nonc2AqL1+VEN+97F3n4YxucBOAL5BgqNwEVc2uUjdKOWAmzwj5ChdJQvN2KldAxkCxE4OenuJ/RL18bWxGGzA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="game.js"></script>
 		<div class="topnav">
@@ -15,6 +15,9 @@
 		<div id="board_container">
 	            <table id="board">
 		    </table>
+			<div hidden class="success-animation">
+				<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>
+			</div>
 		</div>
 	</body>
 </html>
