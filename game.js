@@ -5,6 +5,7 @@ var keyToDirections = {
     "d": [0, -1], // right
     "s": [-1, 0], // down
 }
+var folderNames = ["Brachiosaurus", "Pterodactylus", "Tyrannosaurus", "Velociraptor"];
 
 function generateTable(boardSize, folderName) {
     var tableDom = document.getElementById("board");
@@ -145,7 +146,8 @@ function getCookies() {
    document.cookies
 }
 
-function main(folderName) {
+function main() {
+   folderName = folderNames[Math.floor(Math.random() * folderNames.length)];
    window.addEventListener('scroll', function (e) {
     // Prevent the default scroll behavior
     e.preventDefault();
