@@ -144,7 +144,18 @@ function swapBlank(folderName, newBlankPosition) {
 }
 
 function main(folderName) {
-   document.body.style.overflow = "hidden";
+    // Disable vertical scrolling
+window.addEventListener('scroll', function (e) {
+    // Prevent the default scroll behavior
+    e.preventDefault();
+  }, { passive: false });
+  
+  // Disable horizontal scrolling (for touch devices)
+  document.body.addEventListener('touchmove', function (e) {
+    // Prevent the default touchmove behavior
+    e.preventDefault();
+  }, { passive: false });
+  
    generateTable(3, folderName);
    initBoardState(folderName, 3);
    shuffleBoardState();
