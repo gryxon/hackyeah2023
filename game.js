@@ -1,12 +1,11 @@
 var boardState, blankPosition;
-
-      var keyToDirections = {
-              "a": [0, 1], // left
-              "w": [1, 0], //up
-              "d": [0, -1], // right
-              "s": [-1, 0], // down
-      }
-
+var keyToDirections = {
+    "a": [0, 1], // left
+    "w": [1, 0], //up
+    "d": [0, -1], // right
+    "s": [-1, 0], // down
+}
+var helpText = "Solve the puzzle, on the picture you should find some dinosaur! The control is 'awsd' for desktop and swipe gestures for mobile.";
 
 function generateTable(boardSize, folderName) {
     var tableDom = document.getElementById("board");
@@ -144,9 +143,10 @@ function swapBlank(folderName, newBlankPosition) {
 }
 
 function main(folderName) {
-   document.body.style.overflow = "hidden";
-   generateTable(3, folderName);
-   initBoardState(folderName, 3);
+   var boardSize = prompt("Difficulty level: H (hard) or E (easy)") === "H" ? 4 : 3;
+   folderName += "_" + boardSize; 
+   generateTable(boardSize, folderName);
+   initBoardState(folderName, boardSize);
    shuffleBoardState();
    renderBoard();
    addKeyDownListener(folderName);
