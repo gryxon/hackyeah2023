@@ -142,8 +142,9 @@ function swapBlank(folderName, newBlankPosition) {
      }
 }
 
-function getCookies() {
-   document.cookies
+function setDifficulty(boardSize) {
+    Cookies.set("boardSize", boardSize);
+    console.log(Cookies.get("boardSize"));
 }
 
 function main() {

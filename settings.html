@@ -3,7 +3,8 @@
           <title> Dinozzles </title>
 	  <link rel="stylesheet" href="style.css">
         </head>
-	<body onload="main('Argentinosaurus')">
+	<body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.min.js" integrity="sha512-Nonc2AqL1+VEN+97F3n4YxucBOAL5BgqNwEVc2uUjdKOWAmzwj5ChdJQvN2KldAxkCxE4OenuJ/RL18bWxGGzA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="game.js"></script>
 		<div class="topnav">
                   <a href="index.html">Game</a>
@@ -12,6 +13,11 @@
                   <a href="about.html">About</a>
                 </div>
 		<div id="container">
+		  <label for="difficulty">Choose a difficuty level:</label>
+                  <select name="difficulty" id="difficulty" onchange="setDifficulty(this.value)">
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
 		</div>
 	</body>
 </html>
