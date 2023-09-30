@@ -1,13 +1,16 @@
 <html>
 	<head>
           <title> Dinozzles </title>
-
-        </head>
+		  <link rel="stylesheet" href="style.css">
+    </head>
 	<body onload="main('Argentinosaurus')">
 		<script src="game.js"></script>
 		<div id="board_container">
 	            <table id="board">
 		    </table>
+			<div hidden class="success-animation">
+				<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>
+			</div>
 		</div>
 	</body>
 </html>
