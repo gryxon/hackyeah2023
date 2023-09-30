@@ -143,10 +143,20 @@ function swapBlank(folderName, newBlankPosition) {
 }
 
 function main(folderName) {
+   window.addEventListener('scroll', function (e) {
+    // Prevent the default scroll behavior
+    e.preventDefault();
+  }, { passive: false });
+
+  // Disable horizontal scrolling (for touch devices)
+  document.body.addEventListener('touchmove', function (e) {
+    // Prevent the default touchmove behavior
+    e.preventDefault();
+  }, { passive: false });
    var boardSize = prompt("Difficulty level: H (hard) or E (easy)") === "H" ? 4 : 3;
-   folderName += "_" + boardSize; 
+   folderName += "_" + boardSize;
    generateTable(boardSize, folderName);
-   initBoardState(folderName, boardSize);
+   initBoardState(folderName, boardSize); 
    shuffleBoardState();
    renderBoard();
    addKeyDownListener(folderName);
