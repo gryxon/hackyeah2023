@@ -85,7 +85,7 @@ function addKeyDownListener(folderName) {
     });
 }
 
-function addSwipeListener(){
+function addSwipeListener(folderName){
     let startX, startY, endX, endY;
 
     // Minimum swipe distance to be considered a swipe
@@ -110,7 +110,6 @@ function addSwipeListener(){
         if (deltaX > 0) {
           // Swipe right
           key = "d";
-	  console
         } else {
           // Swipe left
           key = "a"
@@ -145,9 +144,11 @@ function swapBlank(folderName, newBlankPosition) {
 }
 
 function main(folderName) {
+   document.body.style.overflow = "hidden";
    generateTable(3, folderName);
    initBoardState(folderName, 3);
    shuffleBoardState();
    renderBoard();
    addKeyDownListener(folderName);
+   addSwipeListener(folderName);
 }
