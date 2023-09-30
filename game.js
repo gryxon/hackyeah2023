@@ -78,8 +78,13 @@ function addKeyDownListener(folderName) {
           return;
       }
       let direction = keyToDirections[event.key];
-      let newBlankPosition = [blankPosition[0] + direction[0], blankPosition[1] + direction[1]]
-      if (isOutsideBoard(newBlankPosition[0]) || isOutsideBoard(newBlankPosition[1])) {
+      let newBlankPosition = [blankPosition[0] + direction[0], blankPosition[1] + direction[1]];
+      swapBlank(folderName, newBlankPosition);
+    });
+}
+
+function swapBlank(folderName, newBlankPosition) {
+    if (isOutsideBoard(newBlankPosition[0]) || isOutsideBoard(newBlankPosition[1])) {
           return;
       }
      var tmp = boardState[blankPosition[0]][blankPosition[1]];
@@ -90,7 +95,6 @@ function addKeyDownListener(folderName) {
      if (isCorrect(folderName)) {
        setTimeout(function(){ alert("Dobrze!") }, 300);
      }
-    });
 }
 
 function main(folderName) {
