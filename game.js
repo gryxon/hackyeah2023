@@ -1,3 +1,4 @@
+var frozen = false
 var boardState, blankPosition;
 var keyToDirections = {
     "a": [0, 1], // left
@@ -6,6 +7,13 @@ var keyToDirections = {
     "s": [-1, 0], // down
 }
 var folderNames = ["Brachiosaurus", "Pterodactylus", "Tyrannosaurus", "Velociraptor"];
+var dinosaursDescriptions = {
+    "Brachiosaurus": "Brachiosaurus was a massive, herbivorous dinosaur that lived during the Late Jurassic period, around 154 to 153 million years ago. It was one of the largest land animals to ever roam the Earth, with an estimated length of up to 85 feet (26 meters) and a height of approximately 40 to 50 feet (12 to 15 meters). One of its most distinctive features was its long neck, which made it well-suited for reaching vegetation high in trees, unlike many other long-necked dinosaurs that fed on lower foliage. Brachiosaurus was a sauropod, characterized by its enormous body, column-like legs, and a relatively short tail. It likely moved in herds and had a slow, lumbering gait.",
+    "Pterodactylus": "Pterodactylus, often referred to as a pterosaur rather than a dinosaur, was a flying reptile that lived during the Late Jurassic period, around 150 million years ago. It had a wingspan ranging from 1 to 1.5 meters (3 to 5 feet). These creatures were not dinosaurs but rather a separate group of reptiles known as pterosaurs. Pterodactylus is one of the earliest known pterosaurs and played a crucial role in the study of prehistoric flying reptiles and the evolution of flight in vertebrates.",
+    "Tyrannosaurus": "Tyrannosaurus rex, often referred to as T. rex, was one of the largest and most fearsome carnivorous dinosaurs that ever lived, roaming North America during the Late Cretaceous period around 68 to 66 million years ago. T. rex had an incredible bite force, estimated to be one of the strongest in the animal kingdom. It could exert a bite force of up to 12,800 pounds, allowing it to crush bone and devour large prey. Despite its massive size, T. rex was surprisingly fast, capable of running at speeds of up to 20-25 miles per hour for short bursts. This agility likely helped it in hunting and scavenging. T. rex had tiny, seemingly useless arms, each with two clawed fingers. The function of these arms remains a subject of debate among scientists, with some suggesting they might have had a role in gripping during mating or supporting the dinosaur's massive body when standing up.",
+    "Velociraptor": "Velociraptor was a small, carnivorous dinosaur that lived during the Late Cretaceous period, around 85 to 70 million years ago. It was about the size of a turkey, measuring roughly 6 feet (1.8 meters) in length and weighing around 30 pounds (14 kilograms). Contrary to popular depictions in movies like 'Jurassic Park', Velociraptor had feathers, which were likely used for insulation and display purposes. These feathers provide evidence of the close relationship between dinosaurs and modern birds. Velociraptor was a highly intelligent dinosaur with keen senses, and it likely hunted in packs, making it a formidable predator of its time."
+};
+var preventDefault = e => e.preventDefault();
 
 function generateTable(boardSize, folderName) {
     var tableDom = document.getElementById("board");
@@ -23,12 +31,12 @@ function generateTable(boardSize, folderName) {
 }
 
 function renderBoard() {
-    for (let i = 0; i<boardState.length; ++i) {
-        for (let j = 0; j<boardState[i].length; ++j) {
-            let img = document.getElementById("img_" + i + "_" + j);
-	    img.src = boardState[i][j];
-	}
-    }
+        for (let i = 0; i<boardState.length; ++i) {
+            for (let j = 0; j<boardState[i].length; ++j) {
+                let img = document.getElementById("img_" + i + "_" + j);
+	            img.src = boardState[i][j];
+	        }
+        }
 }
 
 function initBoardState(folderName, boardSize){
@@ -75,7 +83,7 @@ function isCorrect(folderName) {
 }
 
 function addKeyDownListener(folderName) {
-    addEventListener("keydown", (event) => {
+    addEventListener("keydown", event => {
       if (!(event.key in keyToDirections)) {
           return;
       }
@@ -137,16 +145,24 @@ function swapBlank(folderName, newBlankPosition) {
      boardState[blankPosition[0]][blankPosition[1]] = boardState[newBlankPosition[0]][newBlankPosition[1]];
      boardState[newBlankPosition[0]][newBlankPosition[1]] = tmp;
      blankPosition = newBlankPosition;
+     if (frozen) {
+        return;
+     }
      renderBoard();
      console.log(isCorrect(folderName));
      if (isCorrect(folderName)) {
-       setTimeout(function(){ addSuccessDiv() }, 300);
+       setTimeout(function(){
+         addSuccessDiv(folderName);
+         frozen = true;
+         enableDefaultScrolling();
+        }, 300);
      }
 }
 
-function addSuccessDiv() {
+function addSuccessDiv(folderName) {
     let svg_anim = '<div class="success-animation"><svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg></div>'
     document.getElementById("anim_div").innerHTML += svg_anim
+    document.getElementById("anim_div").innerHTML += dinosaursDescriptions[folderName.split("-")[0]];
   }
 
 function setDifficulty(boardSize) {
@@ -159,18 +175,20 @@ function setActualDifficulty() {
     document.getElementById("difficulty").value = boardSize;
 }
 
+function preventDefaultScrolling() {
+    window.addEventListener('scroll', preventDefault, { passive: false });
+    document.body.addEventListener('touchmove', preventDefault, { passive: false });
+}
+
+function enableDefaultScrolling() {
+    window.removeEventListener('scroll', preventDefault);
+    document.body.removeEventListener('touchmove', preventDefault);    
+}
+
 function main() {
    folderName = folderNames[Math.floor(Math.random() * folderNames.length)];
-   window.addEventListener('scroll', function (e) {
-    // Prevent the default scroll behavior
-    e.preventDefault();
-  }, { passive: false });
-
-  // Disable horizontal scrolling (for touch devices)
-  document.body.addEventListener('touchmove', function (e) {
-    // Prevent the default touchmove behavior
-    e.preventDefault();
-  }, { passive: false });
+   document.getElementById("anim_div").innerHTML = "";
+   preventDefaultScrolling();
    var boardSize = Cookies.get("boardSize") === undefined ? 3 : parseInt(Cookies.get("boardSize"));
    console.log(Cookies.get());
    console.log(Cookies.get("name"));
