@@ -93,6 +93,47 @@ function addKeyDownListener(folderName) {
     });
 }
 
+function addSwipeListener(){
+    let startX, startY, endX, endY;
+
+    // Minimum swipe distance to be considered a swipe
+    const minSwipeDistance = 50;
+
+    // Add a touchstart event listener to detect the start of the swipe
+    document.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+    // Add a touchend event listener to detect the end of the swipe
+    document.addEventListener('touchend', (e) => {
+      endX = e.changedTouches[0].clientX;
+      endY = e.changedTouches[0].clientY;
+
+      // Calculate the horizontal and vertical distance of the swipe
+      const deltaX = endX - startX;
+      const deltaY = endY - startY;
+      // Determine the direction of the swipe based on the distance
+      if (Math.abs(deltaX) > minSwipeDistance) {
+        if (deltaX > 0) {
+          // Swipe right
+          console.log('Swiped right');
+        } else {
+          // Swipe left
+          console.log('Swiped left');
+        }
+      } else if (Math.abs(deltaY) > minSwipeDistance) {
+        if (deltaY > 0) {
+          // Swipe down
+          console.log('Swiped down');
+        } else {
+          // Swipe up
+          console.log('Swiped up');
+        }
+      }
+    });
+}
+
+
 function main(folderName) {
    generateTable(3, folderName);
    initBoardState(folderName, 3);
