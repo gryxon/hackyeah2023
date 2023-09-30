@@ -5,7 +5,6 @@ var keyToDirections = {
     "d": [0, -1], // right
     "s": [-1, 0], // down
 }
-var helpText = "Solve the puzzle, on the picture you should find some dinosaur! The control is 'awsd' for desktop and swipe gestures for mobile.";
 
 function generateTable(boardSize, folderName) {
     var tableDom = document.getElementById("board");
@@ -142,6 +141,10 @@ function swapBlank(folderName, newBlankPosition) {
      }
 }
 
+function getCookies() {
+   document.cookies
+}
+
 function main(folderName) {
    window.addEventListener('scroll', function (e) {
     // Prevent the default scroll behavior
@@ -153,7 +156,9 @@ function main(folderName) {
     // Prevent the default touchmove behavior
     e.preventDefault();
   }, { passive: false });
-   var boardSize = prompt("Difficulty level: H (hard) or E (easy)") === "H" ? 4 : 3;
+   var boardSize = Cookies.get("boardSize") === undefined ? 3 : parseInt(Cookies.get("boardSize"));
+   console.log(Cookies.get());
+   console.log(Cookies.get("name"));
    folderName += "_" + boardSize;
    generateTable(boardSize, folderName);
    initBoardState(folderName, boardSize); 
