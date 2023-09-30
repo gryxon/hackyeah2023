@@ -65,6 +65,7 @@ function isCorrect(folderName) {
    for (let i = 0; i<boardState.length; ++i) {
         for (let j = 0; j<boardState[i].length; ++j) {
 	    splitted = boardState[i][j].split("_");
+	    console.log(splitted)
             if (splitted[0] != folderName + "/" +  i || splitted[1] != j + ".jpg") {
 	        return false;
 	    }
@@ -137,6 +138,7 @@ function swapBlank(folderName, newBlankPosition) {
      boardState[newBlankPosition[0]][newBlankPosition[1]] = tmp;
      blankPosition = newBlankPosition;
      renderBoard();
+     console.log(isCorrect(folderName));
      if (isCorrect(folderName)) {
        setTimeout(function(){ addSuccessDiv() }, 300);
      }
@@ -172,10 +174,10 @@ function main() {
    var boardSize = Cookies.get("boardSize") === undefined ? 3 : parseInt(Cookies.get("boardSize"));
    console.log(Cookies.get());
    console.log(Cookies.get("name"));
-   folderName += "_" + boardSize;
+   folderName += "-" + boardSize;
    generateTable(boardSize, folderName);
    initBoardState(folderName, boardSize); 
-   shuffleBoardState();
+   //shuffleBoardState();
    renderBoard();
    addKeyDownListener(folderName);
    addSwipeListener(folderName);
