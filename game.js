@@ -1,5 +1,13 @@
 var boardState, blankPosition;
 
+      var keyToDirections = {
+              "a": [0, 1], // left
+              "w": [1, 0], //up
+              "d": [0, -1], // right
+              "s": [-1, 0], // down
+      }
+
+
 function generateTable(boardSize, folderName) {
     var tableDom = document.getElementById("board");
     tableDom.innerHTML="";
@@ -68,16 +76,54 @@ function isCorrect(folderName) {
 
 function addKeyDownListener(folderName) {
     addEventListener("keydown", (event) => {
-      let keyToDirections = {
-	      "a": [0, 1], // left
-	      "w": [1, 0], //up
-	      "d": [0, -1], // right
-	      "s": [-1, 0], // down
-      }
       if (!(event.key in keyToDirections)) {
           return;
       }
       let direction = keyToDirections[event.key];
+      let newBlankPosition = [blankPosition[0] + direction[0], blankPosition[1] + direction[1]];
+      swapBlank(folderName, newBlankPosition);
+    });
+}
+
+function addSwipeListener(){
+    let startX, startY, endX, endY;
+
+    // Minimum swipe distance to be considered a swipe
+    const minSwipeDistance = 50;
+
+    // Add a touchstart event listener to detect the start of the swipe
+    document.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+    // Add a touchend event listener to detect the end of the swipe
+    document.addEventListener('touchend', (e) => {
+      endX = e.changedTouches[0].clientX;
+      endY = e.changedTouches[0].clientY;
+
+      // Calculate the horizontal and vertical distance of the swipe
+      const deltaX = endX - startX;
+      const deltaY = endY - startY;
+      // Determine the direction of the swipe based on the distance
+      let key;
+      if (Math.abs(deltaX) > minSwipeDistance) {
+        if (deltaX > 0) {
+          // Swipe right
+          key = "d";
+        } else {
+          // Swipe left
+          key = "a"
+        }
+      } else if (Math.abs(deltaY) > minSwipeDistance) {
+        if (deltaY > 0) {
+          // Swipe down
+          key = "s";
+        } else {
+          // Swipe up
+          key = "w";
+        }
+      }
+      let direction = keyToDirections[key];
       let newBlankPosition = [blankPosition[0] + direction[0], blankPosition[1] + direction[1]];
       swapBlank(folderName, newBlankPosition);
     });
