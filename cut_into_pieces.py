@@ -11,7 +11,7 @@ def cut_image_to_pieces(src_image_path, num_rows, num_cols):
     path_os = os.path.abspath(src_image_path)
     file_name = os.path.basename(src_image_path)
     file_name_no_extension = os.path.splitext(src_image_path)[0]
-    path_for_dir_cuts = os.path.join(os.getcwd(), file_name_no_extension)
+    path_for_dir_cuts = os.path.join(os.getcwd(), f'{file_name_no_extension}_{num_rows}')
     try:
         shutil.rmtree(path_for_dir_cuts)
     except FileNotFoundError:
@@ -34,6 +34,7 @@ def cut_image_to_pieces(src_image_path, num_rows, num_cols):
             last_subimage = None
             for key in sub_images:
                 sub_image_filename = f'{key[1]}_{key[0]}.jpg'
+
                 sub_images[key].save(
                     os.path.join(path_for_dir_cuts, sub_image_filename)
                 )
@@ -49,7 +50,7 @@ def cut_image_to_pieces(src_image_path, num_rows, num_cols):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--src_img", help="Path to source image.", required=True)
-    parser.add_argument("--num_rows", help="Number of rows after cropping.", required=True)
-    parser.add_argument("--num_cols", help="Number of cols after cropping.", required=True)
     args = parser.parse_args()
-    cut_image_to_pieces(args.src_img, int(args.num_rows), int(args.num_cols))
+    cut_image_to_pieces(args.src_img, 3, 3)
+    cut_image_to_pieces(args.src_img, 4, 4)
+
