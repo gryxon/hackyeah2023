@@ -66,19 +66,18 @@ function isCorrect(folderName) {
    return true;
 }
 
-function addKeyDownListener() {
+function addKeyDownListener(folderName) {
     addEventListener("keydown", (event) => {
-      console.log(event.keyCode);
-      let keyCodeToDirections = {
-	      37: [0, 1], // left
-	      38: [1, 0], //up
-	      39: [0, -1], // right
-	      40: [-1, 0], // down
+      let keyToDirections = {
+	      "a": [0, 1], // left
+	      "w": [1, 0], //up
+	      "d": [0, -1], // right
+	      "s": [-1, 0], // down
       }
-      if (!(event.keyCode in keyCodeToDirections)) {
+      if (!(event.key in keyToDirections)) {
           return;
       }
-      let direction = keyCodeToDirections[event.keyCode];
+      let direction = keyToDirections[event.key];
       let newBlankPosition = [blankPosition[0] + direction[0], blankPosition[1] + direction[1]]
       if (isOutsideBoard(newBlankPosition[0]) || isOutsideBoard(newBlankPosition[1])) {
           return;
@@ -88,6 +87,9 @@ function addKeyDownListener() {
      boardState[newBlankPosition[0]][newBlankPosition[1]] = tmp;
      blankPosition = newBlankPosition;
      renderBoard();
+     if (isCorrect(folderName)) {
+       setTimeout(function(){ alert("Dobrze!") }, 300);
+     }
     });
 }
 
@@ -96,5 +98,5 @@ function main(folderName) {
    initBoardState(folderName, 3);
    shuffleBoardState();
    renderBoard();
-   addKeyDownListener();
+   addKeyDownListener(folderName);
 }
