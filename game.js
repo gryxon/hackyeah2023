@@ -110,6 +110,7 @@ function addSwipeListener(){
         if (deltaX > 0) {
           // Swipe right
           key = "d";
+	  console
         } else {
           // Swipe left
           key = "a"
