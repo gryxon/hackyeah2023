@@ -195,7 +195,7 @@ function main() {
    folderName += "-" + boardSize;
    generateTable(boardSize, folderName);
    initBoardState(folderName, boardSize); 
-   //shuffleBoardState();
+   shuffleBoardState();
    renderBoard();
    addKeyDownListener(folderName);
    addSwipeListener(folderName);
